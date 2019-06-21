@@ -319,7 +319,7 @@ if ! [ -z "$(eval $LIST_GOODIES)" ]; then
 fi
 
 echo "Doing pre-upload tasks..."
-sleep 3s
+sleep 1s
 curl_retry_connect -s -X POST -H 'Content-Type: application/json' -H "X-Api-Key: $API_KEY" -d "{\"id\":$GAME_ID}" "$API_URL/games/preupload" --retry 15 -o /dev/null
 
 #Look for game files
@@ -328,11 +328,10 @@ curl_retry_connect -s -X POST -H 'Content-Type: application/json' -H "X-Api-Key:
 LIST_GAME='find $PATH_GAME -maxdepth 1 -type f \( -iname "*.exe*" ! -iname "setup_postal2_complete_2.0.0.6.exe" ! -iname "setup_kingdom_2.6.0.7.exe" ! -iname "setup_bioshock_1.1_(25450).exe" ! -iname "setup_bioshock_2_1.5.0.019_(25143).exe" ! -iname "setup_syberia2_russian_2.1.0.1.exe" ! -iname "setup_skaut_kwatermaster_polish_2.0.0.3.exe.zip" ! -iname "setup_soltys_polish_2.0.0.5.exe.zip" ! -iname "setup_shadowrun_dragonfall_directors_cut_zog_russian_2.1.1.8.exe" ! -iname "setup_sacrifice_russian_2.1.0.4.exe" ! -iname "setup_planescape_torment_russian_2.1.0.9.exe" ! -iname "setup_mdk2_russian_2.1.0.3.exe" ! -iname "setup_little_inferno_russian_2.0.0.2.exe" ! -iname "setup_kingpin_russian_2.1.0.7.exe" ! -iname "setup_planescape_torment_1.01_(10597).exe" ! -iname "setup_crimsonland_classic_2.0.0.4.exe" ! -iname "setup_seven_kingdoms2_2.0.0.7.exe" ! -iname "setup_outcast_2.0.0.13.exe" ! -iname "setup_yooka_laylee_toybox_2.0.0.2.exe" ! -iname "setup_stronghold_crusader_2.0.0.2.exe" ! -iname "setup_strike_suit_zero_2.1.0.12.exe" ! -iname "setup_octodad_2.0.0.1.exe" ! -iname "setup_jazz_jackrabbit_2_1.24_jj2_(16885).exe" ! -iname "setup_rocket_ranger_german_2.0.0.1.exe" ! -iname "setup_curse_of_the_azure_bonds_v12_2.0.0.1.exe" ! -iname "setup_lone_survivor_2.0.0.2.exe" ! -iname "setup_sublevelzero_1.2_(9875).exe" ! -iname "setup_rune_gold_2.0.0.5.exe" ! -iname "setup_dark_fall_lights_out.exe" ! -iname "setup_prisoner_of_ice_uk_2.0.0.1.exe" ! -iname "setup_falcon_4_2.0.0.1.exe" ! -iname "setup_ether_one_2.1.0.7.exe" ! -iname "setup_spelunky_classic_2.0.0.5.exe" ! -iname "setup_broken_sword1_2.0.0.8.exe" ! -iname "setup_stronghold_2.0.0.9.exe" ! -iname "setup_shadow_of_the_comet_floppy_2.0.0.3.exe" ! -iname "setup_oddworld_strangers_wrath_2.0.0.11.exe" ! -iname "setup_earth_2140_dos_2.0.0.16.exe" ! -iname "setup_homm2_gold_win_2.0.0.7.exe" ! -iname "setup_mind_path_to_thalamus_bonus_2.0.0.3.exe" ! -iname "setup_broken_sword2_2.0.0.6.exe" ! -iname "setup_defenders_quest_2.11.0.18.exe" ! -iname "setup_annas_quest_bonus_2.0.0.1.exe" ! -iname "setup_another_world_2.0.0.4.exe" ! -iname "setup_wizardry7dos_2.0.0.11.exe" ! -iname "setup_wizardry7dos_german_2.2.0.2.exe" ! -iname "setup_the_entertainment_2.0.0.1.exe" ! -iname "setup_limits_and_demontrations_2.0.0.1.exe" ! -iname "setup_kentucky_route_zero_interlude_2.0.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode1_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode1_german_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode1_ukrainian_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode2_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode2_german_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_minisode2_ukrainian_2.1.0.2.exe" ! -iname "setup_to_the_moon_holiday_special_minisode_2.0.0.1.exe" -or -iname "*.url" -or -iname "*.txt" -or -iname "*.bin" -not -name "setup_bioshock_2_1.5.0.019_(25143)-1.bin" -not -name "setup_bioshock_2_1.5.0.019_(25143)-2.bin" -not -name "setup_bioshock_2_1.5.0.019_(25143)-3.bin" -not -name "setup_bioshock_1.1_(25450)-1.bin" \)'
 
 echo "Clearing files..."
-sleep 3s
+sleep 1s
 curl_retry_connect -s -X POST -H 'Content-Type: application/json' -H "X-Api-Key: $API_KEY" -d "{\"id\":$GAME_ID}" "$API_URL/games/clearfiles" --retry 15 -o /dev/null
 
 echo "Building list of files..."
-sleep 3s
 
 LIST_FINAL="{\"GAME\": [],\"GOODIES\": [],\"PATCHES\": []}"
 
@@ -402,7 +401,7 @@ if $HAS_EXTRA; then
 fi
 
 echo "Sending new files to API..."
-sleep 3s
+sleep 1s
 curl_retry_connect -s -X POST -H 'Content-Type: application/json' -H "X-Api-Key: $API_KEY" -d "{\"id\":$GAME_ID,\"FILES\":$LIST_FINAL}" "$API_URL/games/addfiles" --retry 15 -o /dev/null
 
 #Compress and upload PATCH
@@ -440,7 +439,7 @@ if $HAS_PATCH; then
 	echo ${green}"PATCH upload was completed in $RUNTIME_UPLOAD_PATCH" ${reset}
 fi
 
-sleep 3s
+sleep 1s
 
 #Compress and upload GAME
 echo "--------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -472,7 +471,7 @@ END_UPLOAD_TIME_GAME=$(date +%s)
 RUNTIME_UPLOAD_GAME=$(python -c "print '%u:%02u' % ((${END_UPLOAD_TIME_GAME} - ${START_UPLOAD_TIME_GAME})/60, (${END_UPLOAD_TIME_GAME} - ${START_UPLOAD_TIME_GAME})%60)")
 echo ${green}"GAME upload was completed in $RUNTIME_UPLOAD_GAME"${reset}
 
-sleep 3s 
+sleep 1s 
 
 #Compress and upload EXTRAS
 if $HAS_EXTRA; then
@@ -511,14 +510,10 @@ fi
 
 echo "--------------------------------------------------------------------------------------------------------------------------------------------------"
 echo "Doing post-upload tasks..."
-sleep 3s
-
 curl_retry_connect -s -X POST -H 'Content-Type: application/json' -H "X-Api-Key: $API_KEY" -d "{\"id\":$GAME_ID}" "$API_URL/games/postupload" --retry 15 -o /dev/null
 echo "Upload completed. Now resting..."
-sleep 3s
 echo "Cleaning up extra files..."
 rm -rf $PATH_WORKING/*
-sleep 3s
 #Remove patch folder
 for file in $(echo $LIST_EXTRA_FILES | tr "|" "\n"); do
     if [ -f $file ]; then
@@ -534,7 +529,6 @@ for file in $(echo $LIST_EXTRA_FILES | tr "|" "\n"); do
     fi
 done
 echo "Removing un-wanted patch files..."
-sleep 3s
 if $HAS_PATCH; then
     rm -rf "$PATH_PATCH"
 fi
