@@ -119,11 +119,10 @@ if [[ "$QUEUE" =~ "{" ]]; then
 	echo ${green}Up next: $GAME_NAME "|" $GAME_SLUG_FOLDER ${reset}
 	
 	./upload-script.sh $GAME_FOLDER 
-	sleep 15
 		else
 	#Nothing in queue
-	sleep 15
 	echo ${red}Queue is empty. ${reset}
+	sleep 15
 	continue
 fi
 done
