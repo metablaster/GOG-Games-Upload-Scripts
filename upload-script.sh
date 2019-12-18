@@ -350,7 +350,7 @@ for file in $LIST_FINAL_GAME_TEMP; do
     if $docont; then
         continue
     fi
-    LIST_FINAL_GAME=$(echo $LIST_FINAL_GAME | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
+    LIST_FINAL_GAME=$(echo $LIST_FINAL_GAME | sort -V | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
 done
 
 #Add game list to final list
@@ -372,7 +372,7 @@ if $HAS_PATCH; then
         if $docont; then
             continue
         fi
-        LIST_FINAL_PATCH=$(echo $LIST_FINAL_PATCH | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
+        LIST_FINAL_PATCH=$(echo $LIST_FINAL_PATCH | sort -V | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
     done
     #Add patch list to final list
     LIST_FINAL=$(echo $LIST_FINAL | jq ".PATCHES += $LIST_FINAL_PATCH")
@@ -394,7 +394,7 @@ if $HAS_EXTRA; then
         if $docont; then
             continue
         fi
-        LIST_FINAL_GOODIES=$(echo $LIST_FINAL_GOODIES | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
+        LIST_FINAL_GOODIES=$(echo $LIST_FINAL_GOODIES | sort -V | jq ". += [{\"name\": \"$(basename $file)\",\"size\": $(wc -c < "$file")}]")
     done
     #Add goodies list to final list
     LIST_FINAL=$(echo $LIST_FINAL | jq ".GOODIES += $LIST_FINAL_GOODIES" -r)
